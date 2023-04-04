@@ -4,9 +4,6 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 @Entity
 public class Product {
     @Id
@@ -15,11 +12,7 @@ public class Product {
     @NotNull
     private String name;
     private String description;
-    private BigDecimal price;
- /*   @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "product_id")
-    private List<Quotation> quotation;*/
-
+    private Float price;
 
     @Override
     public String toString() {
@@ -30,6 +23,7 @@ public class Product {
                 ", price=" + price +
                 '}';
     }
+
     public Integer getId() {
         return id;
     }
@@ -54,19 +48,21 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-   /* public List<Quotation> getQuotation() {
-        return quotation;
-    }
-
-    public void setQuotation(List<Quotation> quotation) {
-        this.quotation = quotation;
-    }*/
+    /*
+     * public List<Quotation> getQuotation() {
+     * return quotation;
+     * }
+     * 
+     * public void setQuotation(List<Quotation> quotation) {
+     * this.quotation = quotation;
+     * }
+     */
 }

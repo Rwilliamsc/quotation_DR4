@@ -2,7 +2,9 @@ package br.com.javacloud.quotation.controller;
 
 import br.com.javacloud.quotation.model.domain.Product;
 import br.com.javacloud.quotation.model.service.ProductService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +20,17 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @ApiOperation(value = "List all products", response = List.class)
     @GetMapping
+    @Operation(summary = "get all products")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "get all products") })
     public List<Product> findAll() {
         return productService.findAll();
     }
 
-    @ApiOperation(value = "Find product by ID", response = Product.class)
     @GetMapping("/{id}")
+    @Operation(summary = "get product By Id")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "get product By Id"),
+            @ApiResponse(responseCode = "404", description = "product not found") })
     public ResponseEntity<Product> findById(@PathVariable Integer id) {
         Optional<Product> product = productService.findById(id);
         if (product.isPresent()) {
@@ -35,15 +40,18 @@ public class ProductController {
         }
     }
 
-    @ApiOperation(value = "Create a new product", response = Product.class)
     @PostMapping
+    @Operation(summary = "create product")
+    @ApiResponses(value = { @ApiResponse(responseCode = "201", description = "create product") })
     public ResponseEntity<Product> create(@RequestBody Product product) {
         Product savedProduct = productService.save(product);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Update a product", response = Product.class)
     @PutMapping("/{id}")
+    @Operation(summary = "update product")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "update product"),
+            @ApiResponse(responseCode = "404", description = "product not found") })
     public ResponseEntity<Product> update(@PathVariable Integer id, @RequestBody Product product) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (optionalProduct.isPresent()) {
@@ -55,8 +63,10 @@ public class ProductController {
         }
     }
 
-    @ApiOperation(value = "Delete a product")
     @DeleteMapping("/{id}")
+    @Operation(summary = "delete product")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "delete product"),
+            @ApiResponse(responseCode = "404", description = "product not found") })
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (optionalProduct.isPresent()) {

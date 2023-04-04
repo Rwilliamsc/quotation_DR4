@@ -1,10 +1,11 @@
 package br.com.javacloud.quotation.controller;
 
 import br.com.javacloud.quotation.model.domain.Quotation;
-import br.com.javacloud.quotation.model.domain.Quotation;
-import br.com.javacloud.quotation.model.service.ProductService;
 import br.com.javacloud.quotation.model.service.QuotationService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,17 @@ public class QuotationController {
     @Autowired
     private QuotationService quotationService;
 
-    @ApiOperation(value = "List all products", response = List.class)
     @GetMapping
+    @Operation(summary = "get all quotations")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "get all quotations") })
     public List<Quotation> findAll() {
         return quotationService.findAll();
     }
 
-    @ApiOperation(value = "Find quotation by ID", response = Quotation.class)
     @GetMapping("/{id}")
+    @Operation(summary = "get quotation By Id")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "get quotation By Id"),
+            @ApiResponse(responseCode = "404", description = "quotation not found") })
     public ResponseEntity<Quotation> findById(@PathVariable Integer id) {
         Optional<Quotation> quotation = quotationService.findById(id);
         if (quotation.isPresent()) {
@@ -37,20 +41,22 @@ public class QuotationController {
         }
     }
 
-    @ApiOperation(value = "Create a new quotation", response = Quotation.class)
     @PostMapping
+    @Operation(summary = "create quotation")
+    @ApiResponses(value = { @ApiResponse(responseCode = "201", description = "create quotation") })
     public ResponseEntity<Quotation> create(@RequestBody Quotation quotation) {
         try {
             Quotation savedQuotation = quotationService.save(quotation);
             return new ResponseEntity<>(savedQuotation, HttpStatus.CREATED);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @ApiOperation(value = "Update a quotation", response = Quotation.class)
     @PutMapping("/{id}")
+    @Operation(summary = "update quotation")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "update quotation"),
+            @ApiResponse(responseCode = "404", description = "quotation not found") })
     public ResponseEntity<Quotation> update(@PathVariable Integer id, @RequestBody Quotation quotation) {
         Optional<Quotation> optionalProduct = quotationService.findById(id);
         if (optionalProduct.isPresent()) {
@@ -62,8 +68,10 @@ public class QuotationController {
         }
     }
 
-    @ApiOperation(value = "Delete a quotation")
     @DeleteMapping("/{id}")
+    @Operation(summary = "delete quotation")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "delete quotation"),
+            @ApiResponse(responseCode = "404", description = "quotation not found") })
     public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
         Optional<Quotation> optionalProduct = quotationService.findById(id);
         if (optionalProduct.isPresent()) {

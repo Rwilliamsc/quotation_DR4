@@ -1,22 +1,23 @@
 package br.com.javacloud.quotation.model.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+
 @Entity
 public class Quotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotNull
+    private String supplier;
+    private Integer quantity;
+    private Float totalValue;
     @ManyToOne
     private Product product;
-    private Integer quantity;
-    private BigDecimal totalValue;
 
     @Override
     public String toString() {
@@ -36,6 +37,14 @@ public class Quotation {
         this.id = id;
     }
 
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -52,11 +61,11 @@ public class Quotation {
         this.quantity = quantity;
     }
 
-    public BigDecimal getTotalValue() {
+    public Float getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(BigDecimal totalValue) {
+    public void setTotalValue(Float totalValue) {
         this.totalValue = totalValue;
     }
 }
