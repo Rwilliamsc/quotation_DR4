@@ -1,6 +1,5 @@
 package br.com.javacloud.quotation.model.service;
 
-import com.amazonaws.services.mediastoredata.model.GetObjectResult;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
