@@ -22,6 +22,10 @@ public class QuotationService {
         return quotationRepository.findById(id);
     }
 
+    public List<Quotation>  findByIdProduct(Integer id) {
+        return quotationRepository.findByIdProduct(id);
+    }
+
     public Quotation save(Quotation product) {
         return quotationRepository.save(product);
     }

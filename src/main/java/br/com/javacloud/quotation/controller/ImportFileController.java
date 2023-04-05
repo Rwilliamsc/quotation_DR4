@@ -35,9 +35,9 @@ public class ImportFileController {
 
     while (line != null) {
       field = line.split(";");
-      if (field[0] == "product") {
+      if (field[0].equalsIgnoreCase("product")) {
         insertProduct(field);
-      } else if (field[0] == "product") {
+      } else if (field[0].equalsIgnoreCase("quotation")) {
         insertQuotation(field);
       }
       line = readFile.readLine();
@@ -51,6 +51,8 @@ public class ImportFileController {
     prod.setName(fields[1]);
     prod.setDescription(fields[2]);
     prod.setPrice(Float.parseFloat(fields[3]));
+    prod.setCategory(fields[4]);
+    prod.setSupplier(fields[5]);
     productService.save(prod);
   }
 
@@ -67,7 +69,9 @@ public class ImportFileController {
 
   private File convertMultiPartToFile(MultipartFile file) throws IOException {
     File convFile = new File(file.getOriginalFilename());
-    file.transferTo(convFile);
+    FileOutputStream fos = new FileOutputStream(convFile);
+    fos.write(file.getBytes());
+    fos.close();
     return convFile;
   }
 }

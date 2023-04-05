@@ -12,7 +12,6 @@ public class Quotation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
     private String supplier;
     private Integer quantity;
     private Float totalValue;

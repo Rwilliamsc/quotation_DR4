@@ -13,6 +13,10 @@ public class Product {
     private String name;
     private String description;
     private Float price;
+    private String Category;
+    private String supplier;
+    private String pictureUrl;
+
 
     @Override
     public String toString() {
@@ -54,6 +58,30 @@ public class Product {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String category) {
+        Category = category;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
     }
 
     /*

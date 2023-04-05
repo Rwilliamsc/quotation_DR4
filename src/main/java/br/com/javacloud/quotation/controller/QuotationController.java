@@ -41,6 +41,14 @@ public class QuotationController {
         }
     }
 
+    @GetMapping("/product/{id}")
+    @Operation(summary = "get quotation By  product Id")
+    @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "get quotation By product Id"),
+            @ApiResponse(responseCode = "404", description = "quotation not found") })
+    public List<Quotation>  findByIdProduct(@PathVariable Integer id) {
+        return quotationService.findByIdProduct(id);
+    }
+
     @PostMapping
     @Operation(summary = "create quotation")
     @ApiResponses(value = { @ApiResponse(responseCode = "201", description = "create quotation") })
